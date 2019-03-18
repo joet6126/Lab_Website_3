@@ -1,0 +1,65 @@
+<% include ../partials/header %>
+<% include ../partials/menu %>
+	<div class="container">
+		<br>
+		<div class="jumbotron">
+		  <h1 class="display-4">Fall 2018 Stats</h1>
+		  <p class="lead">Detailed information on how the Buffs are doing in the 2018 Football Season!</p>
+		</div>
+		
+		<table class="table table-bordered" id="stats_table">
+			<tr>
+				<th class="align-bottom" rowspan="2">Game Date</th>
+				<th class="align-bottom"rowspan="2">Opposing Team Name</th>
+				<th class="text-center" colspan="2">Score</th>
+				<th class="align-bottom" rowspan="2">Winner</th>
+			</tr>
+			<tr>
+				<th>Home Score</th>
+				<th>Opp. Score</th>
+			</tr>
+
+			<%
+				if(result_1){
+					result_1.forEach(function(elem) { %>
+						<tr>
+						<td><%= elem.game_date %></td>
+						<td><%= elem.visitor_name %></td>
+						<td><%= elem.home_score %></td>
+						<td><%= elem.visitor_score %></td>			
+						<% if(elem.home_score > elem.visitor_score) { %>
+							<td>CU Boulder</td>
+						<% } else { %>
+							<td><%= elem.visitor_name %></td>
+						<% } %>
+						</tr>
+			<%		});
+				}
+			%>
+			
+			
+		</table>
+		<br>
+		<table class="table text-center">
+			<tr>
+				<th>Wins</th>
+				<th>Losses</th>
+			</tr>
+			<tr>
+				<%
+					if(result_2) {
+						var wins = result_2[0].wins;
+						var losses = result_2[0].losses;
+					}
+				%>
+				<td> 
+					<%= wins %>
+				</td>
+				<td> 
+					<%= losses %>
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+<% include ../partials/footer %>

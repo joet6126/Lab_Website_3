@@ -1,0 +1,91 @@
+<% include ../partials/header %>
+<% include ../partials/menu %>
+	<div class="container">
+		<br>
+		<div class="row">
+			<div class="col-4">
+				<div class="card">
+				  <% 
+				  	var player = {
+						name:'',
+						year:'',
+						major:'',
+						passing_yards:'',
+						rushing_yards:'',
+						receiving_yards:'',
+						img_src:''
+					};
+
+					
+				  	var image_src = '../resources/img/helmet.jpg';
+				  	if(result_2) {
+						player = result_2;
+						image_src = player.img_src;
+					}
+				  %>
+				 <img class="card-img-top" id="player_img" src= "<%- image_src %>" alt="Image of Football Player">
+				  <div class="card-body mx-auto">
+					<form class="form" action="/player_info/post" method="get">
+						<select class="custom-select" name="player_choice" onchange="this.form.submit()">
+							 <%
+							 	var strOpts = '<option selected>Select Player</option>';
+							 	if(result_1) {
+							 		result_1.forEach(function(item) {
+							 			strOpts += '<option value="' + item.id + '">' + item.name + '</option>';
+							 		});
+							 		%><%- strOpts %><%
+							 	}
+							 %>
+
+						</select>
+					</form>
+				  </div>
+				</div>
+			</div>
+			<div class="col-8">
+				<div class="table-responsive">
+					<table class="table">
+						<tr>
+							<!-- TODO: Set Player Information
+							 			If a player has been selected, fill in their information in each of the fields below.
+							 		    You'll need to calculate here the player's average rushing, receiving, and passing yards.-->
+							<%
+								if(result_3){
+									var gamesPlayed = result_3.count;
+									var avgPassing = player.passing_yards / gamesPlayed;
+									var avgRushing = player.rushing_yards / gamesPlayed;
+									var avgReceiving = player.receiving_yards / gamesPlayed;
+								}
+
+							%>
+
+							<th>Year</th>
+							<td>	<%= player.year %>	</td>
+						</tr>
+						<tr>
+							<th>Major</th>
+							<td>	<%= player.major %>	</td>
+						</tr>
+						<tr>
+							<th>Games Played</th>
+							<td>	<%= gamesPlayed %></td>
+						</tr>
+						<tr>
+							<td>Passing Yards: <%= player.passing_yards %></td>
+							<td>Avg. Passing Yards: <%= avgPassing %></td>
+						</tr>
+						<tr>
+							<td>Rushing Yards: <%= player.rushing_yards %></td>
+							<td>Avg. Rushing Yards: <%= avgRushing %></td>
+						</tr>
+						<tr>
+							<td>Receiving Yards: <%= player.receiving_yards %></td>
+							<td>Avg. Receiving Yards: <%= avgReceiving %></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+<% include ../partials/footer %>
